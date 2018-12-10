@@ -24,15 +24,22 @@ module.exports = {
   },
 
   approveHotel(req, res){
-    //Remove from pending,
-    let sql = "DELETE FROM pendingHotel WHERE name = ?";
+    //Keep the data for second insertions
+    let sql = "SELECT * FROM pendingHotel WHERE name = ?";
     dbConnection.query(sql, req.body.name, (err, res)=>{
       if(err) {throw err; res.send("Failed to delete from pending");}
       else{
-        //Add To Hotel
-        creations.createHotel(req, res);
+        //Remove from pending,
+        sql = "DELETE FROM pendingHotel WHERE name = ?";
+        dbConnection.query(sql, req.body.name, (err, res)=>{
+          if(err) {throw err; res.send("Failed to delete from pending");}
+          else{
+            //Add To Hotel
+            creations.createHotel(req, res);
+          }
+        })
       }
-    })
+    }
   }
 
 }
