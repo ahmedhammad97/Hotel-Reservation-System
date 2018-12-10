@@ -1,10 +1,11 @@
-//Database module
+//imported modules
 const dbconnection = require(__dirname + '/../Database/connection');
+const creations = require(__dirname + '/creations');
 
 module.exports = {
 
   createPendingHotel(req, res){
-    let sql = "INSERT INTO Hotel (name, stars, premium, O_email, pool, gym, bar, city, country, district) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let sql = "INSERT INTO pendingHotel (name, stars, premium, O_email, pool, gym, bar, city, country, district) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     //Create pending hotel
     dbConnection.query(sql, [
@@ -24,7 +25,14 @@ module.exports = {
 
   approveHotel(req, res){
     //Remove from pending,
-    //Add To
+    let sql = "DELETE FROM pendingHotel WHERE name = ?";
+    dbConnection.query(sql, req.body.name, (err, res)=>{
+      if(err) {throw err; res.send("Failed to delete from pending");}
+      else{
+        //Add To Hotel
+        creations.createHotel(req, res);
+      }
+    })
   }
 
 }

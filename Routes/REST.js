@@ -1,7 +1,7 @@
 //Dependencies
 const router = require('express').Router();
 const bodyParser = require('body-parser');
-const service = require(__dirname + '/../Services/creations');
+const service = require(__dirname + '/../Services/pendingHotel');
 
 //BodyParser
 var jsonParser = bodyParser.json();
