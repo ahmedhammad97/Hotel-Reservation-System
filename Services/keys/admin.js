@@ -1,6 +1,6 @@
 module.exports = {
   //admin
-  username : "$2y$05$enUjNFXNnNgaj2MWnmD4gOqFVB4ECwS4FHWTdki2fdi11gGE9KPIK",
+  "username" : "$2b$08$LLvvLXKfh/cBQ7J5jEHuIOfCBHPeDihXfdqsBEd3ct29yyRG5NlBa",
   //0000
-  password : "$2y$05$CfmSd1f966cR0egFnOP/funedWKCNzmKaPiLdGbWrAxgxCMWtqQea"
+  "password" : "$2b$08$NlUqziMFiAyME9BzyfkHAOrl1XYOvenOMWXbk1vZMLjnygEDsz.fu"
 }

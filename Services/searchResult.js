@@ -1,7 +1,5 @@
 //Dependencies
 const dbconnection = require(__dirname + '/../Database/connection');
-const bodyParser = require("body-parser");
-
 
 
 module.exports = {
@@ -17,9 +15,9 @@ module.exports = {
             fromDate = req.body.fromDate,
             toDate = req.body.toDate,
             stars = req.body.stars,
-            roomType = req.vody.roomType;
+            roomType = req.body.roomType;
 
-        let sql=`SELECT * FROM hotelroom r WHERE r.count >0 `;
+        let sql=`SELECT * FROM hotelroom AS r WHERE r.count >0 `;
 
 
         if (countryLocation) {
@@ -56,12 +54,12 @@ module.exports = {
         if (stars) {
             sql += `AND r.star = ${stars} `;
         }
-       
-        dbConnection.query(sql, reqEmail, (err, result) => {
+
+        dbConnection.query(sql, (err, result) => {
             if(err) throw err;
             console.log(result);
-            return result;
-        }
-                  
+            res.send({"data" : result});
+        });
+
     }
 }
