@@ -16,6 +16,7 @@ router.get('/', (req, res)=>{
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/approve', jsonParser, creation.approveHotel);
 router.post('/reject', jsonParser, creation.rejectHotel);
+router.post('/search',jsonParser,searchService.getResults);
 
 
 module.exports = router;
