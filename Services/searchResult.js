@@ -6,7 +6,6 @@ module.exports = {
 
     getResults(req,res){
         let Hname = req.body.Hname ,
-            rooms_count = req.body.rooms_count,
             price = req.body.price,
             rate = req.body.rate,
             country = req.body.country,
@@ -26,18 +25,17 @@ module.exports = {
                     INNER JOIN location on location.Hname = hotelroom.Hname
                     INNER JOIN reservation on reservation.roomNo = hotelroom.roomNo
                     WHERE  1=1                                                                       AND
-                    ("${Hname}" ="null" OR hotelroom.Hname = '${Hname}')                             AND
-                    ("${price}"="null"  OR hotelroom.price = ${price} )                       AND
-                    ("${rooms_count}"="null"  OR hotelroom.rooms_count = ${rooms_count} )     AND
-                    ("${type}"="null"  OR hotelroom.type = '${type}' )                        AND
-                    ("${date_from}"="null"   OR reservation.date_to < '${date_from}' )         AND
-                    ("${date_to}"="null"   OR reservation.date_from > '${date_to}' )           AND
-                    ("${bar}"="null"   OR h_facilites.bar = ${bar} )                           AND
-                    ("${gym}"="null"   OR h_facilites.gym = ${gym} )                           AND
-                    ("${pool}"="null"   OR h_facilites.pool = ${pool})                         AND
-                    ("${city}"="null"   OR location.city = '${city}')                          AND
-                    ("${country}"="null"   OR location.country = '${country}')                 AND
-                    ("${district}"="null"   OR location.district = '${district}') 
+                    ("${Hname}" ="" OR hotelroom.Hname = '${Hname}')                             AND
+                    ("${price}"=""  OR hotelroom.price = ${price} )                        AND
+                    ("${type}"=""  OR hotelroom.type = '${type}' )                         AND
+                    ("${date_from}"=""   OR reservation.date_to < '${date_from}' )         AND
+                    ("${date_to}"=""   OR reservation.date_from > '${date_to}' )           AND
+                    ("${bar}"=""   OR h_facilites.bar = ${bar} )                           AND
+                    ("${gym}"=""   OR h_facilites.gym = ${gym} )                           AND
+                    ("${pool}"=""   OR h_facilites.pool = ${pool})                         AND
+                    ("${city}"=""   OR location.city = '${city}')                          AND
+                    ("${country}"=""   OR location.country = '${country}')                 AND
+                    ("${district}"=""   OR location.district = '${district}') 
                     
                     `;
 
