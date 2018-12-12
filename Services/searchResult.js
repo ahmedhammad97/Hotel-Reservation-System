@@ -25,18 +25,18 @@ module.exports = {
                     INNER JOIN h_facilites on h_facilites.Hname = hotelroom.Hname
                     INNER JOIN location on location.Hname = hotelroom.Hname
                     INNER JOIN reservation on reservation.roomNo = hotelroom.roomNo
-                    WHERE  1=1                                                              AND
-                    ("${Hname}" ="null" OR hotelroom.Hname = '${Hname}')              AND
+                    WHERE  1=1                                                                       AND
+                    ("${Hname}" ="null" OR hotelroom.Hname = '${Hname}')                             AND
                     ("${price}"="null" IS NULL OR hotelroom.price = ${price} )                       AND
-                    ("${rooms_count}"="null" IS NULL OR hotelroom.rooms_count = ${rooms_count} ) AND
-                    ("${type}"="null" IS NULL OR hotelroom.type = '${type}' )                  AND
-                    ("${date_from}"="null" IS NULL OR reservation.date_to < '${date_from}' )           AND
-                    ("${date_to}"="null" IS NULL OR reservation.date_from > '${date_to}' )             AND
+                    ("${rooms_count}"="null" IS NULL OR hotelroom.rooms_count = ${rooms_count} )     AND
+                    ("${type}"="null" IS NULL OR hotelroom.type = '${type}' )                        AND
+                    ("${date_from}"="null" IS NULL OR reservation.date_to < '${date_from}' )         AND
+                    ("${date_to}"="null" IS NULL OR reservation.date_from > '${date_to}' )           AND
                     ("${bar}"="null" IS NULL OR h_facilites.bar = ${bar} )                           AND
                     ("${gym}"="null" IS NULL OR h_facilites.gym = ${gym} )                           AND
                     ("${pool}"="null" IS NULL OR h_facilites.pool = ${pool})                         AND
-                    ("${city}"="null" IS NULL OR location.city = '${city}')          AND
-                    ("${country}"="null" IS NULL OR location.country = '${country}') AND
+                    ("${city}"="null" IS NULL OR location.city = '${city}')                          AND
+                    ("${country}"="null" IS NULL OR location.country = '${country}')                 AND
                     ("${district}"="null" IS NULL OR location.district = '${district}') 
                     
                     `;
