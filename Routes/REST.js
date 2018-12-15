@@ -6,6 +6,7 @@ const creation = require(__dirname + '/../Services/creations');
 const auth = require(__dirname + '/../Services/auth');
 const update = require(__dirname + '/../Services/updates');
 const searchService = require(__dirname + '/../Services/searchResult');
+const reserve = require(__dirname + '/../Services/reserve');
 
 //BodyParser
 var jsonParser = bodyParser.json();
@@ -18,7 +19,9 @@ router.get('/', (req, res)=>{
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/approve', jsonParser, creation.approveHotel);
 router.post('/reject', jsonParser, creation.rejectHotel);
-router.post('/search',jsonParser,searchService.getResults);
-router.post('/rate', jsonParser, update.rateHotel)
+router.get('/search',jsonParser,searchService.getResults);
+router.post('/rate', jsonParser, update.rateHotel);
+router.post('/reserve', jsonParser, reserve.reserve);
+
 
 module.exports = router;
