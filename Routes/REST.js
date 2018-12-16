@@ -22,6 +22,7 @@ router.post('/reject', jsonParser, creation.rejectHotel);
 router.get('/search',jsonParser,searchService.getResults);
 router.post('/rate', jsonParser, update.rateHotel);
 router.post('/reserve', jsonParser, reserve.reserve);
-
+router.post('/hotelapprove', jsonParser, reserve.approveReservation);
+router.post('/hotelreject', jsonParser, reserve.rejectReservation);
 
 module.exports = router;
