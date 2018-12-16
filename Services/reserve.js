@@ -71,7 +71,7 @@ module.exports = {
         return req.send(`Reservation is rejected by the Hotel`);
     },
     // Case 2: the Hotel has approved the reservation within 30 seconds.
-    approvereservation(req, res) {
+    approveReservation(req, res) {
         clearTimeout(timeOutForHotelconfirm);
         let sql_reserve = `INSERT INTO reservation  VALUES
                                                 ('${H_name}','${room_no}','${c_email}','${date_to}','${date_from}',0) `;
