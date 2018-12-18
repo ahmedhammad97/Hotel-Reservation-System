@@ -9,10 +9,10 @@ module.exports = {
     if(fake){
       let difference  = moment() - realTimeWhenFaked;
       fakeTime.add(difference, 'milliseconds');
-      return fakeTime.format();
+      return fakeTime.format("DD/MM/YYYY, h:mm:ss a");
     }
     else{
-      return moment().format("DD MM YYYY, h:mm:ss a")
+      return moment().format("DD/MM/YYYY, h:mm:ss a")
     }
   },
 

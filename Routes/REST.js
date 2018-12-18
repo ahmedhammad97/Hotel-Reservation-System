@@ -41,6 +41,22 @@ router.get('/backdoor', (req, res)=>{
 
 router.post('/backdoor', urlencodedParser, auth.adminLogin)
 
+router.get('/fakeTime', (req, res)=>{
+  res.render('time', {"date": timer.getTimeNow()})
+})
+
+router.post('/fakeTime', urlencodedParser, (req, res)=>{
+  if(req.body.btn == "Fake to this time"){
+    timer.fakeDate(req.body.date)
+    res.send("Time faked successfully ;)");
+  }
+  else if(req.body.btn == "Reset to real time"){
+    timer.resetDate();
+    res.send("Time reseted successfully");
+  }
+  else{res.send("Error, Wrong choice")}
+})
+
 router.post('/login', urlencodedParser, (req, res)=>{
   if(req.body.type == "owner") auth.ownerLogin(req, res);
   else if(req.body.type == "customer") auth.customerLogin(req, res);
