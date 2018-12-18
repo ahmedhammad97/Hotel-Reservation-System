@@ -1,9 +1,12 @@
 //Dependencies
 const dbConnection = require(__dirname + '/../Database/connection');
 const bcrypt = require('bcrypt');
+const session = require('cookie-session');
 const keys = require(__dirname + '/keys/admin');
 const bcryptKey = require(__dirname + '/keys/bcrypt');
+var cookieParser = require('cookie-parser');
 
+var sess;
 module.exports = {
 
   adminLogin(req, res){
@@ -20,10 +23,20 @@ module.exports = {
       }
       else{res.send({"message": "Wrong username"});}
     })
+
   },
 
   customerLogin(req, res){
-    let reqEmail = req.body.email;
+    let reqEmail, reqPassword;
+    sess = req.session;
+    if (sess.email) {
+      reqEmail = sess.email;
+      reqPassword = sess.password;
+      console.log(`using coockies Email: ${reqEmail} PW: ${reqPassword}`);
+    } else {
+     reqEmail = req.body.email;
+     reqPassword = req.body.password;
+    }
     //Query
     let sql = "SELECT name, password FROM Customer WHERE email = ?";
     dbConnection.query(sql, reqEmail, (err, result)=>{
@@ -33,8 +46,18 @@ module.exports = {
       if(result.length != 0){
 
         //Verify password
-        bcrypt.compare(req.body.password, result[0].password, (err, rep)=>{
-          if(rep){res.render('customerView', {"name" : result[0].name});}
+        bcrypt.compare(reqPassword, result[0].password, (err, rep) => {
+          if(rep){
+            sess.email = req.body.email;
+            sess.password = req.body.password;
+            sess.resave = true;
+           // sess.cookie.path = "/";
+            //sess.cookie.secure = true;
+            //res.wrte(`Welcom ${result[0].name}`);
+            // res.render('customerView', {"name" : result[0].name});
+           // res.cookie("hello", rep);
+            res.send(`Your email ${req.body.email}`);
+          }
           else{res.send({"message" : "Wrong password"});}
         })
 
@@ -43,6 +66,7 @@ module.exports = {
         res.send({"message" : "No such a user"});
       }
     })
+   
   },
 
   customerRegister(req, res){
@@ -56,7 +80,8 @@ module.exports = {
           res.send({"message" : "User already exists"});
       }
       else{ //Valid regiseration
-        res.render('customerView', {"name" : req.body.name});
+        res.send(`Thank you, Fuck off`);
+        //  res.render('customerView', {"name" : req.body.name}); not done yet the Customer view
       }
     })
   },

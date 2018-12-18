@@ -32,8 +32,9 @@ module.exports = {
                     ("${Hname}" ="" OR hotelroom.Hname = '${Hname}')                       AND
                     (${price} IS NULL  OR hotelroom.price = ${price} )                     AND
                     ("${type}"=""  OR hotelroom.type = '${type}' )                         AND
-                    ("${date_from}"=""   OR reservation.date_to < '${date_from}' )         AND
-                    ("${date_to}"=""   OR reservation.date_from > '${date_to}' )           AND
+                    (("${date_from}"=""   OR reservation.date_to < '${date_from}' )        AND
+                    ("${date_to}"=""   OR reservation.date_from > '${date_to}' ) )         AND
+                    (("${date_from}"=""   OR reservation.date_to > '${date_from}') AND )                                                                      AND
                     (${bar} IS NULL   OR h_facilites.bar = ${bar} )                        AND
                     (${gym} IS NULL   OR h_facilites.gym = ${gym} )                        AND
                     (${pool} IS NULL   OR h_facilites.pool = ${pool})                      AND
