@@ -20,15 +20,38 @@ router.use(session ({
   cookie: {
     secure : true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    
   }
-  
 }));
 
 router.get('/', (req, res)=>{
-  res.render('index');
-  
+  res.render('index', {"date": timer.getTimeNow()});
 });
+
+router.get('/login', (req, res)=>{
+  res.render('login', {"date": timer.getTimeNow()})
+})
+
+router.get('/signup', (req, res)=>{
+  res.render('signup', {"date": timer.getTimeNow()})
+})
+
+router.get('/backdoor', (req, res)=>{
+  res.render('backdoor', {"date": timer.getTimeNow()})
+})
+
+router.post('/backdoor', urlencodedParser, auth.adminLogin)
+
+router.post('/login', urlencodedParser, (req, res)=>{
+  if(req.body.type == "owner") auth.ownerLogin(req, res);
+  else if(req.body.type == "customer") auth.customerLogin(req, res);
+  else{res.send("Error! Wrong choice")}
+})
+
+router.post('/signup', urlencodedParser, (req, res)=>{
+  if(req.body.type == "owner") auth.ownerRegister(req, res);
+  else if(req.body.type == "customer") auth.customerRegister(req, res);
+  else{res.send("Error! Wrong choice")}
+})
 
 
 router.post('/create', jsonParser, creation.createRoom);

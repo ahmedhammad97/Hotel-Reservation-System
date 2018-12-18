@@ -28,7 +28,7 @@ module.exports = {
 
   customerLogin(req, res){
     let reqEmail, reqPassword;
-    sess = req.session;
+    let sess = req.session;
     if (sess.email) {
       reqEmail = sess.email;
       reqPassword = sess.password;
@@ -66,7 +66,7 @@ module.exports = {
         res.send({"message" : "No such a user"});
       }
     })
-   
+
   },
 
   customerRegister(req, res){

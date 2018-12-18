@@ -1,0 +1,24 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+<div class= "box">
+  <form method="post">
+    <header style="font-size: 25px"> Sign up</header>
+    <br>
+    <label  for="name">Name:</label><br>
+    <input type="text" id="name" name="name" placeholder="Full name" required><br>
+    <label  for="email">Email address:</label><br>
+    <input type="text" id="email" name="email" placeholder="Email address" required><br>
+    <label  for="password">Password:</label><br>
+    <input type="password" id="password" name="password" placeholder="Password" required><br>
+    <label for="type">Type:</label>
+    <input type="radio" name="type" value="owner" required> Hotel Owner
+    &nbsp&nbsp&nbsp&nbsp&nbsp
+    <input type="radio" name="type" value="customer"> Customer<br><br />
+    <button id="signup">Sign up</button>
+  </form>
+</div>
+</center>
+
+<% include partials/footer %>

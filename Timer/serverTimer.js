@@ -12,7 +12,7 @@ module.exports = {
       return fakeTime.format();
     }
     else{
-      return moment().format()
+      return moment().format("DD MM YYYY, h:mm:ss a")
     }
   },
 
