@@ -1,0 +1,66 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Owner email</th>
+      <th>Stars</th>
+      <th>Premium</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Pool</th>
+      <th>Gym</th>
+      <th>Bar</th>
+      <th>Approve</th>
+      <th>Reject</th>
+    </tr>
+    <% for(let i=0; i<data.length; i++){ %>
+      <tr name="<%= data[i].name%>">
+        <td><%= data[i].name %></td>
+        <td><%= data[i].O_email %></td>
+        <td><%= data[i].stars %></td>
+        <td><%= data[i].premium %></td>
+        <td><%= data[i].city %></td>
+        <td><%= data[i].country %></td>
+        <td><%= data[i].pool %></td>
+        <td><%= data[i].gym %></td>
+        <td><%= data[i].bar %></td>
+        <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Approve</button></td>
+        <td><button type="button" id="r<%= i %>" style="background-color:red">Reject</button></td>
+      </tr>
+    <% } %>
+  </table>
+</center>
+
+<% include partials/footer %>
+
+<script type="text/javascript">
+  $("button").on("click", e=>{
+    let btnId = e.target.id;
+    let rowNum = +(btnId.substring(1));
+    let row = $("tr:has(td)")[rowNum];
+    let Hname = $(row).attr("name");
+
+    if(btnId[0]=='a'){ //Approve
+      $.ajax({
+        method: "POST",
+        url: "/approveHotel",
+        data: {"name": Hname}
+      }).done(function( data ) {
+        if(data.message){alert(data.message);}
+      });
+    }
+    else{ //Reject
+      $.ajax({
+        method: "POST",
+        url: "/rejectHotel",
+        data: {"name": Hname}
+      }).done(function( data ) {
+        if(data.message){alert(data.message);}
+      });
+    }
+  })
+</script>

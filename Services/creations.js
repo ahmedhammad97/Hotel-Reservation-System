@@ -26,12 +26,12 @@ module.exports = {
     //Keep the data for second insertions
     let sql = "SELECT * FROM PendingHotel WHERE name = ?";
     dbConnection.query(sql, req.body.name, (err1, res1)=>{
-      if(err1) {throw err1; res1.send("Failed to delete from pending");}
+      if(err1) {throw err1; res1.send({"message": "Failed to delete from pending"});}
       else{
         //Remove from pending,
         sql = "DELETE FROM PendingHotel WHERE name = ?";
         dbConnection.query(sql, req.body.name, (err2, res2)=>{
-          if(err2) {throw err2; res2.send("Failed to delete from pending");}
+          if(err2) {throw err2; res2.send({"message": "Failed to delete from pending"});}
           else{
             //Add To Hotel
             req.body.stars = res1[0].stars;
@@ -54,7 +54,7 @@ module.exports = {
     //Remove from pending,
     sql = "DELETE FROM PendingHotel WHERE name = ?";
     dbConnection.query(sql, req.body.name, (err, result)=>{
-      if(err) {throw err; res.send("Failed to delete from pending");}
+      if(err) {throw err; res.send({"message": "Failed to delete from pending"});}
       else{
         res.send({"message": "deleted successfully from pending hotels"});
       }

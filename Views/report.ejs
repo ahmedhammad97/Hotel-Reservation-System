@@ -1,0 +1,20 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Hotel name</th>
+      <th>Owe</th>
+    </tr>
+    <% for(let i=0; i<data.length; i++){ %>
+
+      <td><%= data[i].Hname %></td>
+      <td><%= data[i].price %></td>
+
+    <% } %>
+  </table>
+</center>
+
+<% include partials/footer %>

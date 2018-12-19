@@ -1,0 +1,138 @@
+*{
+  margin :0;
+  padding: 0;
+}
+
+.topnav{
+  overflow : hidden;
+  background :DodgerBlue;
+}
+.topnav a{
+  float :right;
+  display :block;
+  color:white;
+  text-align : center;
+  padding :14px 14px;
+  text-decoration:none;
+}
+.topnav a:hover{
+  background-color :LightGray;
+}
+
+.center{
+border :70px;
+  padding : 70px;
+}
+.center h1{
+  font-size :40px ;
+  letter-spacing :2px;
+  text-align: center;
+  font-family: veranda;
+  color: DodgerBlue;
+}
+.center p{
+  font-size : 20px;
+  text-align :center;
+  font-family:veranda;
+}
+.center input[type="text"]{
+  width :300px;
+  padding :14px;
+  font-size :20px;
+}
+.center input[type="button"]{
+  width : 100px;
+    background-color:DodgerBlue ;
+    color: white;
+    padding: 14px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size:20px
+}
+.center input[type="button"]:hover{
+  background-color :LightGray;
+}
+header{
+  overflow : hidden;
+  background :DodgerBlue;
+  font-size :40px ;
+  letter-spacing :2px;
+  text-align: center;
+  font-family: veranda;
+  color: white;
+}
+.box{
+  background-color :  white;
+  width :500px;
+  box-shadow: 5px 5px LightGray;
+  padding:30px;
+  align-items: center;
+  margin :50px;
+  border-radius: 10px;
+
+}
+input[type=password], select {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=submit] {
+    width: 30%;
+    background-color: DodgerBlue ;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    right: 30px;
+    font-size: 20px;
+}
+input[type=text], select {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button{
+    background-color:DodgerBlue;
+    color: white;
+    padding: 14px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size:20px
+}
+
+label{
+  float: left;
+  padding-left: 55px;
+}
+
+table, th, td{
+  border: 1px solid black;
+}
+
+th, td{
+  padding: 10px;
+}
+
+footer{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background: DodgerBlue;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+}
