@@ -58,13 +58,14 @@ module.exports = {
   },
 
   getReport(req, res){
-    let sql = `SELECT Reservation.Hname as Hname, SUM(HotelRoom.price) as price
-    FROM Reservation WHERE did_show = ? AND date_from > ?
-    INNER JOIN HotelRoom ON Reservation.Hname = HotelRoom.Hname AND
+    let sql = `SELECT Reservation.Hname as Hname,
+    SUM(HotelRoom.price * 0.09 * TIMESTAMPDIFF(DAY, Reservation.date_from, Reservation.date_to)) as price
+    FROM Reservation INNER JOIN HotelRoom ON Reservation.Hname = HotelRoom.Hname AND
     Reservation.roomNo = HotelRoom.roomNo
+    WHERE Reservation.did_show = ? AND Reservation.date_from > ?
     GROUP BY Hname`;
 
-    let monthAgo = moment().subtract(1, "months").format("YYYY/MM/DD, HH:mm:ss");
+    let monthAgo = moment().subtract(1, "months").format("DD/MM/YYYY");
 
     dbConnection.query(sql, [true, monthAgo], (err, result)=>{
       if(err) throw err;

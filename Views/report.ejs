@@ -2,16 +2,19 @@
 
 <header>ChillOut</header>
 <center>
-  <ul>
-  <% for(let i=0; i<data.length; i++){ %>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Hotel name</th>
+      <th>Owe</th>
+    </tr>
+    <% for(let i=0; i<data.length; i++){ %>
 
-    <li>
-      <input type="checkbox" name="" value="">
-      <%= data[i].Hname %> &nbsp&nbsp <%= data[i].price %>
-    </li>
+      <td><%= data[i].Hname %></td>
+      <td><%= data[i].price %></td>
 
-  <% } %>
-  </ul>
+    <% } %>
+  </table>
 </center>
 
 <% include partials/footer %>
