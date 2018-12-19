@@ -3,6 +3,7 @@ const dbConnection = require(__dirname + '/../Database/connection');
 const bcrypt = require('bcrypt');
 const session = require('cookie-session');
 const keys = require(__dirname + '/keys/admin');
+const timer = require(__dirname + '/../Timer/serverTimer');
 const bcryptKey = require(__dirname + '/keys/bcrypt');
 var cookieParser = require('cookie-parser');
 
@@ -16,7 +17,7 @@ module.exports = {
         bcrypt.compare(req.body.password, keys.password, (err2, rep2)=>{
           if(err2) throw err;
           if(rep2){
-            res.render("brokerView");
+            res.render("brokerView", {"date": timer.getTimeNow()});
           }
           else{ res.send({"message": "Wrong password"});}
         })
