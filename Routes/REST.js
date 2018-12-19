@@ -82,10 +82,12 @@ router.get('/report', fetch.getReport)
 
 router.get('/pending', fetch.getPending)
 
+router.post('/approveHotel', urlencodedParser, creation.approveHotel);
+
+router.post('/rejectHotel', urlencodedParser, creation.rejectHotel);
+
 
 router.post('/create', jsonParser, creation.createRoom);
-router.post('/approve', jsonParser, creation.approveHotel);
-router.post('/reject', jsonParser, creation.rejectHotel);
 router.get('/search',jsonParser,searchService.getResults);
 router.post('/rate', jsonParser, update.rateHotel);
 router.post('/reserve', jsonParser, reserve.reserve);

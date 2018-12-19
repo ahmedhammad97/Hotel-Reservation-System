@@ -50,7 +50,8 @@ module.exports = {
     dbConnection.query(sql, (err, result)=>{
       if(err) throw err;
       if(result.length>0){
-        res.render('pending', {"date": timer.getTimeNow(), "data": result})
+        res.render('pendingHotels', {"date": timer.getTimeNow(), "data": result})
+        console.log(result);
       }
       else{res.send("No pending requests for now.")}
     })
@@ -60,7 +61,8 @@ module.exports = {
     let sql = `SELECT Reservation.Hname as Hname, SUM(HotelRoom.price) as price
     FROM Reservation WHERE did_show = ? AND date_from > ?
     INNER JOIN HotelRoom ON Reservation.Hname = HotelRoom.Hname AND
-    Reservation.roomNo = HotelRoom.roomNo`;
+    Reservation.roomNo = HotelRoom.roomNo
+    GROUP BY Hname`;
 
     let monthAgo = moment().subtract(1, "months").format("YYYY/MM/DD, HH:mm:ss");
 

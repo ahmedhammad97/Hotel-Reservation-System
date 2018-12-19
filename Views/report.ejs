@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <ul>
+  <% for(let i=0; i<data.length; i++){ %>
+
+    <li>
+      <input type="checkbox" name="" value="">
+      <%= data[i].Hname %> &nbsp&nbsp <%= data[i].price %>
+    </li>
+
+  <% } %>
+  </ul>
+</center>
+
+<% include partials/footer %>
