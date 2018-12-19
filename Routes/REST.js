@@ -5,6 +5,7 @@ const router = require('express').Router();
 const bodyParser = require('body-parser');
 const creation = require(__dirname + '/../Services/creations');
 const auth = require(__dirname + '/../Services/auth');
+const fetch = require(__dirname + '/../Services/fetch');
 const update = require(__dirname + '/../Services/updates');
 const searchService = require(__dirname + '/../Services/searchResult');
 const reserve = require(__dirname + '/../Services/reserve');
@@ -69,6 +70,18 @@ router.post('/signup', urlencodedParser, (req, res)=>{
   else{res.send("Error! Wrong choice")}
 })
 
+router.get('/brokerView', (req, res)=>{
+  res.render('brokerView', {"date": timer.getTimeNow()})
+})
+
+router.post('/suspendHotel', urlencodedParser, update.suspendHotel)
+
+router.post('/unsuspendHotel', urlencodedParser, update.unsuspendHotel)
+
+router.get('/report', fetch.getReport)
+
+router.get('/pending', fetch.getPending)
+
 
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/approve', jsonParser, creation.approveHotel);
@@ -78,7 +91,5 @@ router.post('/rate', jsonParser, update.rateHotel);
 router.post('/reserve', jsonParser, reserve.reserve);
 router.post('/hotelapprove', jsonParser, reserve.approveReservation);
 router.post('/hotelreject', jsonParser, reserve.rejectReservation);
-router.post('/register', jsonParser, auth.customerRegister);
-router.post('/login', jsonParser, auth.customerLogin);
 
 module.exports = router;

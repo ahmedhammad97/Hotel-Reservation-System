@@ -65,11 +65,11 @@ header{
 }
 .box{
   background-color :  white;
-  width :400px;
+  width :500px;
   box-shadow: 5px 5px LightGray;
-  padding:70px;
+  padding:30px;
   align-items: center;
-  margin :100px;
+  margin :50px;
   border-radius: 10px;
 
 }
@@ -103,9 +103,8 @@ input[type=text], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
-form button{
-  width : 100px;
-    background-color:DodgerBlue ;
+button{
+    background-color:DodgerBlue;
     color: white;
     padding: 14px;
     margin: 8px 0;
@@ -127,4 +126,5 @@ footer{
   background: DodgerBlue;
   color: white;
   text-align: center;
+  font-size: 18px;
 }

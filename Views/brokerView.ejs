@@ -1,0 +1,30 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+<div class= "box">
+  <header>Control Pannel</header>
+  <br /><br />
+  <form action="/suspendHotel" method="post">
+    <input type="text" name="name" placeholder="Hotel name" required>
+    <input type="submit" value="Suspend" style="background-color: red"/>
+  </form>
+  <br /><br />
+  <form action="/unsuspendHotel" method="post">
+    <input type="text" name="name" placeholder="Hotel name" required>
+    <input type="submit" value="Unsuspend" style="background-color: limeGreen" />
+  </form>
+  <br /><br />
+  <a href="/report"><button id="report">Monthly Report</button></a>
+  <a href="/pending"><button id="pending">Pending Hotels</button></a>
+
+</div>
+</center>
+
+<% include partials/footer %>
+
+<!--Broker can:
+  - Approve / reject hotels
+  - View monthly report
+  - Suspend and unsuspend hotels
+-->

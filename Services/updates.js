@@ -34,11 +34,36 @@ module.exports = {
           //Blacklist user
           sql = "UPDATE Customer SET blackListed = ? WHERE email = ?";
           dbConnection.query(sql, [true, req.body.email], (err1, result1)=>{
+            if(err1) throw err1;
             res.send({"message": "Customer black-listed successfully"});
           })
         }
       }
     })
+  },
+
+  suspendHotel(req, res){
+    let sql = "UPDATE Hotel SET suspend = ? WHERE name = ?";
+    try {
+      dbConnection.query(sql, [true, req.body.name], (err, result)=>{
+        if(err){throw err; res.send("Wrong query");}
+        res.send("Suspended successfully");
+      })
+    } catch (e) {
+      res.send("No such a hotel")
+    }
+  },
+
+  unsuspendHotel(req, res){
+    let sql = "UPDATE Hotel SET suspend = ? WHERE name = ?";
+    try {
+      dbConnection.query(sql, [false, req.body.name], (err, result)=>{
+        if(err){throw err; res.send("Wrong query");}
+        res.send("Unsuspended successfully");
+      })
+    } catch (e) {
+      res.send("No such a hotel")
+    }
   }
 
 }
