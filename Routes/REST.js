@@ -27,7 +27,7 @@ router.use(session({
 }));
 
 router.get('/', (req, res) => {
-    res.render('indexBs', { "date": timer.getTimeNow() });
+    res.render('indexbs', { "date": timer.getTimeNow() });
 });
 
 router.get('/login', (req, res) => {
