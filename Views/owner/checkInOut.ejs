@@ -1,0 +1,39 @@
+<% include ../partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <h2>Checkin:</h2>
+  <table>
+    <tr>
+      <th>Customer email</th>
+    </tr>
+    <tr>
+
+    <% for(let i=0; i < inn.length; i++){ %>
+
+      <td><%= inn[i].email %></td>
+
+    <% } %>
+    </tr>
+  </table>
+
+  <br /><br />
+
+  <h2>Checkout:</h2>
+  <table>
+    <tr>
+      <th>Customer email</th>
+    </tr>
+
+    <tr>
+    <% for(let i=0; i < out.length; i++){ %>
+
+      <td><%= out[i].email %></td>
+
+    <% } %>
+    </tr>
+  </table>
+</center>
+
+<% include ../partials/footer %>

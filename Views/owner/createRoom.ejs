@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+
+<header>ChillOut</header>
+<center>
+<div class= "box">
+  <form method="post">
+    <header style="font-size: 25px">Register new Room</header>
+    <br>
+    <label  for="hotelName">Hotel name</label><br>
+    <select name="hotelName" required>
+      <% for(let i=0; i<hotels.length; i++){ %>
+        <option value="<%=hotels[i].name%>"><%=hotels[i].name%></option>
+      <% } %>
+    </select><br />
+
+    <label  for="type">Room type</label><br>
+    <input type="text" name="type" required><br>
+
+    <label  for="number">Room number</label>
+    <input type="number" name="number" min="1" max="99" required><br><br /><br />
+
+    <label  for="price">Price</label>
+    <input type="number" name="price" min="1" max="99999" required>&nbsp<span>$</span>
+    <br><br /><br />
+
+
+    <label  for="wifi">Wifi</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <input type="checkbox" name="wifi"><br>
+    <label  for="bar">Bar</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <input type="checkbox" name="bar"><br><br /><br />
+
+    <label  for="view">Room view</label><br>
+    <input type="text" name="view" required><br>
+
+    <button type="submit">Register</button>
+  </form>
+</div>
+</center>
+
+<% include ../partials/footer %>

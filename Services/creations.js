@@ -5,19 +5,18 @@ module.exports = {
 
   createPendingHotel(req, res){
     let sql = "INSERT INTO PendingHotel (name, stars, premium, O_email, pool, gym, bar, city, country, district) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
     //Create pending hotel
     dbConnection.query(sql, [
-      req.body.name, req.body.stars, req.body.premium, req.body.O_email,
-      req.body.pool, req.body.gym, req.body.bar,
+      req.body.name, req.body.stars, fixBoolean(req.body.premium), req.body.O_email,
+      fixBoolean(req.body.pool), fixBoolean(req.body.gym), fixBoolean(req.body.bar),
       req.body.city, req.body.country, req.body.district
     ], (err, result)=>{
       if(err){
         throw err;
-        res.send({"message": "Hotel creation failed"});
+        res.send("Hotel creation failed");
       }
       else{
-        res.send({"message" : "Created successfully"});
+        res.send("Created successfully .. You will have to wait unitl admin's approval before creating rooms");
       }
     })
   },
@@ -68,21 +67,21 @@ module.exports = {
     dbConnection.query(sql, [req.body.number, req.body.hotelName, req.body.type, req.body.price], (err1, result1)=>{
       if(err1){
         throw err1;
-        res.send({"message": "Creation failed"});
+        res.send("Creation failed");
       }
       else{
         sql = "INSERT INTO R_Facilites (roomNo, Hname, room_view, wifi, bar) VALUES (?, ?, ?, ?, ?)";
 
         //Create room facilities
-        dbConnection.query(sql, [req.body.number, req.body.hotelName, req.body.view, req.body.wifi, req.body.bar], (err2, result2)=>{
+        dbConnection.query(sql, [req.body.number, req.body.hotelName, req.body.view, fixBoolean(req.body.wifi), fixBoolean(req.body.bar)], (err2, result2)=>{
           if(err2){
             throw err2;
             sql = "DELETE FROM HotelRoom WHERE roomNo = ? AND Hname = ?";
             dbConnection.query(sql, [req.body.number, req.body.hotelName]);
-            res.send({"message": "Creation failed"});
+            res.send("Creation failed");
           }
           else{
-            res.send({"message" : "Hotel room added successfully"});
+            res.send("Hotel room added successfully");
           }
         })
       }
@@ -136,3 +135,7 @@ function createHotel(req, res){
     }
   })
 }
+
+
+//Helper functions
+function fixBoolean(value){return value?true:false}

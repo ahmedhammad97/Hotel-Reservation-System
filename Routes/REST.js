@@ -3,7 +3,6 @@ const timer = require(__dirname + '/../Timer/serverTimer');
 const express = require('express');
 const router = require('express').Router();
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const creation = require(__dirname + '/../Services/creations');
 const auth = require(__dirname + '/../Services/auth');
 const fetch = require(__dirname + '/../Services/fetch');
@@ -12,7 +11,6 @@ const searchService = require(__dirname + '/../Services/searchResult');
 const reserve = require(__dirname + '/../Services/reserve');
 const session = require('cookie-session');
 
-//router.use(multer);
 //BodyParser
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -27,7 +25,7 @@ router.use(session({
 }));
 
 router.get('/', (req, res) => {
-    res.render('indexbs', { "date": timer.getTimeNow() });
+    res.render('index', { "date": timer.getTimeNow() });
 });
 
 router.get('/login', (req, res) => {
@@ -86,9 +84,20 @@ router.post('/approveHotel', urlencodedParser, creation.approveHotel);
 
 router.post('/rejectHotel', urlencodedParser, creation.rejectHotel);
 
-router.post('/searchtry', urlencodedParser, (req, res) => {
-    console.log(req.body);
+router.get('/ownerView', fetch.ownerView)
+
+router.get('/createHotel', (req, res) => {
+    res.render('owner/createHotel', { "date": timer.getTimeNow() })
 })
+
+router.post('/createHotel', urlencodedParser, creation.createPendingHotel)
+
+router.get('/createRoom', fetch.getHotelsbyOwner)
+
+router.post('/createRoom', urlencodedParser, creation.createRoom)
+
+router.post('/checkInOut', urlencodedParser, fetch.whoWillCheckInOut)
+
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/search', urlencodedParser, searchService.getResults);
 router.post('/rate', jsonParser, update.rateHotel);
