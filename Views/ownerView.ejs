@@ -39,11 +39,40 @@
     </select><br />
     <button type="submit">Check</button>
   </form>
+  <br /><br />
+
+  <form action="/checkin" method="post" style="background-color: lightblue; padding: 10px; border-radius: 10px">
+    <label for="email">Customer email</label><br />
+    <input type="text" name="email"><br />
+    <label for="number">Room number</label>
+    <input type="number" name="room" min="1" max="99"><br />
+    <label for="name">Hotel name</label>
+    <select name="name" required>
+      <% for(let i=0; i<hotels.length; i++){ %>
+        <option value="<%=hotels[i].name%>"><%=hotels[i].name%></option>
+      <% } %>
+    </select><br />
+    <button type="submit">CheckIn</button>
+  </form>
+  <br /><br />
+
+  <form action="/blacklist" method="post" style="background-color: #e9e9e9; padding: 10px; border-radius: 10px">
+    <label for="email">Customer email</label><br />
+    <input type="text" name="email"><br />
+    <button type="submit">Blacklist</button>
+  </form>
+  <p style="visibility:hidden;" id="cookieEmail"><%= email %></p>
 
 </div>
 </center>
 
 <% include partials/footer %>
+
+<script type="text/javascript">
+  $(document).ready(()=>{
+    document.cookie = `email = ${$("#cookieEmail").text()}; path=/`;
+  })
+</script>
 
 <!--
 Owner can:
@@ -53,4 +82,7 @@ Owner can:
   -Approve reservation or cancel it within 30 seconds
   -View reservations between any times
   -Who check in/out at any time
+  -Check in customer
+  -Blacklist customer
+  -
 -->

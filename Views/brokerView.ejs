@@ -18,10 +18,17 @@
   <a href="/report"><button id="report">Monthly Report</button></a>
   <a href="/pending"><button id="pending">Pending Hotels</button></a>
 
+  <p style="visibility:hidden;" id="cookieEmail"><%= email %></p>
 </div>
 </center>
 
 <% include partials/footer %>
+
+<script type="text/javascript">
+  $(document).ready(()=>{
+    document.cookie = `email = ${$("#cookieEmail").text()}; path=/`;
+  })
+</script>
 
 <!--Broker can:
   - Approve / reject hotels

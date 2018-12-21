@@ -1,6 +1,6 @@
 //Dependencies
 const express = require('express');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const path = require("path");
 const routes = require('./Routes/REST');
 const dbConnection = require(__dirname + '/Database/connection');
@@ -18,11 +18,11 @@ app.set('views', path.join(__dirname, '/Views'));
 //Listen to port
 const server = app.listen(1997, ()=>{console.log("Listening at port 1997...")});
 
-//Express REST
-app.use(routes);
-
 //Cookie Parser
 app.use(cookieParser());
+
+//Express REST
+app.use(routes);
 
 //Database connection
 dbConnection.connect(err=>{

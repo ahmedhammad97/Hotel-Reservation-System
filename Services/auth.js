@@ -19,9 +19,7 @@ module.exports = {
                 bcrypt.compare(req.body.password, keys.password, (err2, rep2) => {
                     if (err2) throw err;
                     if (rep2) {
-                        res.render("brokerView", {
-                            "date": timer.getTimeNow()
-                        });
+                        res.render('brokerView', { "date": timer.getTimeNow(), "email":req.body.username });
                     } else {
                         res.send({
                             "message": "Wrong password"
@@ -109,10 +107,13 @@ module.exports = {
                 //Verify password
                 bcrypt.compare(req.body.password, result[0].password, (err, rep) => {
                     if (rep) {
-                        res.render('ownerView', {
-                            "name": result[0].name,
-                            "email": reqEmail
-                        });
+                      let sql = "SELECT name FROM Hotel WHERE O_email = ?";
+                      dbConnection.query(sql, reqEmail, (err, result)=>{
+                        if(err){throw err; res.send("Error occured");}
+                        else{
+                            res.render("ownerView", {"date": timer.getTimeNow(), "hotels":result, "email":reqEmail})
+                        }
+                      })
                     } else {
                         res.send({
                             "message": "Wrong password"
@@ -143,10 +144,13 @@ module.exports = {
                     });
                 } else { //Valid regiseration
 
-                    res.render('ownerView', {
-                        "name": req.body.name,
-                        "email": req.body.email
-                    });
+                  let sql = "SELECT name FROM Hotel WHERE O_email = ?";
+                  dbConnection.query(sql, req.body.email, (err, result)=>{
+                    if(err){throw err; res.send("Error occured");}
+                    else{
+                        res.render("ownerView", {"date": timer.getTimeNow(), "hotels":result, "email":req.body.email})
+                    }
+                  })
                 }
             })
         });

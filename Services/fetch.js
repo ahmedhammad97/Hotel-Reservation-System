@@ -47,7 +47,6 @@ module.exports = {
       if(err) throw err;
       if(result.length>0){
         res.render('broker/pendingHotels', {"date": timer.getTimeNow(), "data": result})
-        console.log(result);
       }
       else{res.send("No pending requests for now.")}
     })
@@ -74,8 +73,7 @@ module.exports = {
   },
 
   getHotelsbyOwner(req, res){
-    //let ownerEmail = req.cookie.email;
-    let ownerEmail = "salma@gmail.com"
+    let ownerEmail = req.cookie.email;
     let sql = "SELECT name FROM Hotel WHERE O_email = ?";
     dbConnection.query(sql, ownerEmail, (err, result)=>{
       if(err){throw err; res.send("Error occured");}
@@ -84,18 +82,6 @@ module.exports = {
           res.render("owner/createRoom", {"date": timer.getTimeNow(), "hotels":result})
         }
         else{res.send("You don't have any approved Hotels yet.")}
-      }
-    })
-  },
-
-  ownerView(req, res){
-    //let ownerEmail = req.cookie.email;
-    let ownerEmail = "salma@gmail.com"
-    let sql = "SELECT name FROM Hotel WHERE O_email = ?";
-    dbConnection.query(sql, ownerEmail, (err, result)=>{
-      if(err){throw err; res.send("Error occured");}
-      else{
-          res.render("ownerView", {"date": timer.getTimeNow(), "hotels":result})
       }
     })
   }

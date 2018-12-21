@@ -5,25 +5,16 @@ const router = require('express').Router();
 const bodyParser = require('body-parser');
 const creation = require(__dirname + '/../Services/creations');
 const auth = require(__dirname + '/../Services/auth');
+const authMiddleware = require(__dirname + '/../Services/authMiddlewares');
 const fetch = require(__dirname + '/../Services/fetch');
 const pending = require(__dirname + '/../Services/pendingReservations')
 const update = require(__dirname + '/../Services/updates');
 const searchService = require(__dirname + '/../Services/searchResult');
 const reserve = require(__dirname + '/../Services/reserve');
-const session = require('cookie-session');
 
 //BodyParser
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-router.use(session({
-    secret: 'secretkeyForSecuirty',
-    name: "login_cookies",
-    cookie: {
-        secure: true,
-        maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    }
-}));
 
 router.get('/', (req, res) => {
     res.render('index', { "date": timer.getTimeNow() });
@@ -69,31 +60,25 @@ router.post('/signup', urlencodedParser, (req, res) => {
     else { res.send("Error! Wrong choice") }
 })
 
-router.get('/brokerView', (req, res) => {
-    res.render('brokerView', { "date": timer.getTimeNow() })
-})
-
 router.post('/suspendHotel', urlencodedParser, update.suspendHotel)
 
 router.post('/unsuspendHotel', urlencodedParser, update.unsuspendHotel)
 
-router.get('/report', fetch.getReport)
+router.get('/report' , authMiddleware.isAdmin, fetch.getReport)
 
-router.get('/pending', fetch.getPending)
+router.get('/pending', authMiddleware.isAdmin, fetch.getPending)
 
 router.post('/approveHotel', urlencodedParser, creation.approveHotel);
 
 router.post('/rejectHotel', urlencodedParser, creation.rejectHotel);
 
-router.get('/ownerView', fetch.ownerView)
-
-router.get('/createHotel', (req, res) => {
+router.get('/createHotel', authMiddleware.isUser, (req, res) => {
     res.render('owner/createHotel', { "date": timer.getTimeNow() })
 })
 
 router.post('/createHotel', urlencodedParser, creation.createPendingHotel)
 
-router.get('/createRoom', fetch.getHotelsbyOwner)
+router.get('/createRoom', authMiddleware.isUser, fetch.getHotelsbyOwner)
 
 router.post('/createRoom', urlencodedParser, creation.createRoom)
 
@@ -101,7 +86,11 @@ router.post('/checkInOut', urlencodedParser, fetch.whoWillCheckInOut)
 
 router.post('/viewHReservations', urlencodedParser, fetch.getHotelReservations)
 
-router.get('/checkReservations', pending.getPendingReservations)
+router.get('/checkReservations', authMiddleware.isUser, pending.getPendingReservations)
+
+router.post('/checkin', update.customerShow)
+
+router.post('/blacklist', update.blacklistCustomer)
 
 
 
@@ -110,24 +99,8 @@ router.get('/checkReservations', pending.getPendingReservations)
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/search', urlencodedParser, searchService.getResults);
 router.post('/rate', jsonParser, update.rateHotel);
-router.post('/reserve', urlencodedParser, isAuthenticated, reserve.reserve);
+router.post('/reserve', urlencodedParser, reserve.reserve);
 router.get('/hotelapprove', jsonParser, reserve.approveReservation);
 router.post('/hotelreject', jsonParser, reserve.rejectReservation);
 
 module.exports = router;
-
-//Function to check if the user is logged in or not (Protection function)
-function isAuthenticated(req, res, next) {
-    console.log(req.body);
-    let sess = req.session;
-    if (sess.email) //IF THE USER IS LOGGED IN,
-    {
-        console.log(sess.email);
-        return next();
-    }
-
-    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM TO LOGIN PAGE
-
-    console.log(req.originalUrl);
-    res.redirect('/login', req, res);
-}

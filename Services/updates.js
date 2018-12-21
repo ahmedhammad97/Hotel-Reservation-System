@@ -26,18 +26,10 @@ module.exports = {
 
   customerShow(req, res){
     let sql = "UPDATE Reservation SET did_show = ? WHERE Hname = ? AND roomNo = ? AND c_email = ?";
-    dbConnection.query(sql, [req.body.show, req.body.name, req.body.room, req.body.email], (err, result)=>{
+    dbConnection.query(sql, [true, req.body.name, req.body.room, req.body.email], (err, result)=>{
       if(err){throw err; res.send("Failed to update");}
       else{
-        if(req.body.show){res.send({"message": "Customer updated successfully"});}
-        else{
-          //Blacklist user
-          sql = "UPDATE Customer SET blackListed = ? WHERE email = ?";
-          dbConnection.query(sql, [true, req.body.email], (err1, result1)=>{
-            if(err1) throw err1;
-            res.send({"message": "Customer black-listed successfully"});
-          })
-        }
+        res.send({"message": "Customer updated successfully"});
       }
     })
   },
@@ -63,6 +55,18 @@ module.exports = {
       })
     } catch (e) {
       res.send("No such a hotel")
+    }
+  },
+
+  blacklistCustomer(req, res){
+    let sql = "UPDATE Customer SET blackListed = ? WHERE email = ?";
+    try {
+      dbConnection.query(sql, [true, req.body.email], (err, result)=>{
+        if(err){throw err; res.send("Wrong query");}
+        res.send("Blacklisted successfully");
+      })
+    } catch (e) {
+      res.send("No such a Customer")
     }
   }
 
