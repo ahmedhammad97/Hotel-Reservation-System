@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+<div class= "box">
+  
+
+  <p style="visibility:hidden;" id="cookieEmail"><%= email %></p>
+</div>
+</center>
+
+<% include partials/footer %>
+
+<script type="text/javascript">
+  $(document).ready(()=>{
+    document.cookie = `email = ${$("#cookieEmail").text()}; path=/`;
+  })
+</script>

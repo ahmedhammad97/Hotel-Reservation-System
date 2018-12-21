@@ -1,58 +1,89 @@
 //Dependencies
-var dbconnection = require(__dirname + '/../Database/connection');
-
+const dbconnection = require(__dirname + '/../Database/connection');
+const timer = require(__dirname + '/../Timer/serverTimer');
 
 module.exports = {
 
     getResults(req, res) {
         let Hname = req.body.Hname,
-            price = req.body.price,
-            rate = req.body.rate,
+            minPrice = req.body.minPrice,
+            maxPrice = req.body.maxPrice,
+            rating = req.body.rating,
             country = req.body.country,
             city = req.body.city,
-            district = req.body.district,
-            date_from = req.body.dateFrom,
-            date_to = req.body.dateTo,
+            date_from = req.body.fromDate,
+            date_to = req.body.toDate,
             stars = req.body.stars,
-            type = req.body.roomType,
-            bar = req.body.bar,
-            pool = req.body.pool,
-            gym = req.body.gym;
-        pool = bar = 0;
-        gym = 1;
-        console.log(`${req.body.Hname}`);
-        if (price == "") price = 0;
+            type = req.body.type;
+
+            let AndBool = false;
 
 
+        let sql = ` SELECT * FROM HotelRoom
+                    INNER JOIN Hotel on Hotel.name = HotelRoom.Hname
+                    INNER JOIN Location on Location.Hname = HotelRoom.Hname
+                    INNER JOIN Reservation ON
+                    (Hotel.name = Reservation.Hname AND HotelRoom.roomNo = Reservation.roomNo) `;
 
-        let sql = ` SELECT * FROM hotelroom 
-                    INNER JOIN h_facilites on h_facilites.Hname = hotelroom.Hname
-                    INNER JOIN location on location.Hname = hotelroom.Hname
-                    
-                    WHERE  1=1                                                             AND
-                    ("${Hname}" ="" OR hotelroom.Hname = '${Hname}')                       AND
-                    (${price} =0  OR hotelroom.price = ${price} )                         AND
-                    ("${type}"="Room Type"  OR hotelroom.type = '${type}' )               AND
-                  
-                    (${bar} IS NULL   OR h_facilites.bar = ${bar} )                        AND
-                    (${gym} IS NULL   OR h_facilites.gym = ${gym} )                        AND
-                    (${pool} IS NULL   OR h_facilites.pool = ${pool})                      AND
-                    ("${city}" =""   OR location.city = '${city}')                         AND
-                    ("${country}"=""   OR location.country = '${country}')                 AND
-                    ("${district}"=""   OR location.district = '${district}') 
-                    
-                    `;
 
-        console.log(sql);
-        console.log(date_from = "");
+                    if(Hname !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `Hotel.name = ${'Hname'}`
+                    }
+                    if(rating !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `Hotel.rating >= ${rating}`
+                    }
+                    if(stars !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `Hotel.stars = ${stars}`
+                    }
+                    if(type !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `HotelRoom.type = ${"type"}`
+                    }
+                    if(country !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `Location.country = ${'country'}`
+                    }
+                    if(city !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `Location.city = ${'city'}`
+                    }
+                    if(minPrice !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `HotelRoom.price >= ${minPrice}`
+                    }
+                    if(maxPrice !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `HotelRoom.price <= ${maxPrice}`
+                    }
+                    if(date_from !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `${date_from} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                    }
+                    if(date_to !== ""){
+                      if(AndBool){sql += " AND ";}
+                      else{AndBool=true; sql+= " WHERE "}
+                      sql += `${date_to} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                    }
 
+                    sql+= " GROUP BY Hotel.premium";
 
 
         dbconnection.query(sql, (err, result) => {
             if (err) throw err;
-            console.log({ "data": result });
-            console.log(result.length);
-            res.render("searchResult", { "results": result });
+            res.render("searchResults", { "date": timer.getTimeNow(), "data": result });
+            res.end()
         });
 
     }

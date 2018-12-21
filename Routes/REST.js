@@ -72,13 +72,17 @@ router.post('/approveHotel', urlencodedParser, creation.approveHotel);
 
 router.post('/rejectHotel', urlencodedParser, creation.rejectHotel);
 
-router.get('/createHotel', authMiddleware.isUser, (req, res) => {
+router.post('/approveRegisteration', urlencodedParser, pending.approve);
+
+router.post('/rejectRegisteration', urlencodedParser, pending.reject);
+
+router.get('/createHotel', authMiddleware.isOwner, (req, res) => {
     res.render('owner/createHotel', { "date": timer.getTimeNow() })
 })
 
 router.post('/createHotel', urlencodedParser, creation.createPendingHotel)
 
-router.get('/createRoom', authMiddleware.isUser, fetch.getHotelsbyOwner)
+router.get('/createRoom', authMiddleware.isOwner, fetch.getHotelsbyOwner)
 
 router.post('/createRoom', urlencodedParser, creation.createRoom)
 
@@ -86,18 +90,22 @@ router.post('/checkInOut', urlencodedParser, fetch.whoWillCheckInOut)
 
 router.post('/viewHReservations', urlencodedParser, fetch.getHotelReservations)
 
-router.get('/checkReservations', authMiddleware.isUser, pending.getPendingReservations)
+router.get('/checkReservations', authMiddleware.isOwner, pending.getPendingReservations)
 
 router.post('/checkin', update.customerShow)
 
 router.post('/blacklist', update.blacklistCustomer)
 
+router.get('/search', (req, res)=>{
+  res.render('search', { "date": timer.getTimeNow() })
+})
 
-
-
+router.post('/reserve', urlencodedParser, reserve.reserve, pending.createReservation);
 
 router.post('/search', urlencodedParser, searchService.getResults);
+
+
+
 router.post('/rate', jsonParser, update.rateHotel);
-router.post('/reserve', urlencodedParser, reserve.reserve);
 
 module.exports = router;

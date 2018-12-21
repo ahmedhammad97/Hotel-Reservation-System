@@ -6,6 +6,7 @@ var waiting = []
 module.exports = {
 
   createReservation(req, res){
+    res.send({"message": "Sent. Should be approved within 30 seconds"})
     var counter = setTimeout(()=>{
       actualCreation(req.body);
     },30000)

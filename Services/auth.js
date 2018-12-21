@@ -1,13 +1,12 @@
 //Dependencies
 const dbConnection = require(__dirname + '/../Database/connection');
 const bcrypt = require('bcrypt');
-const session = require('cookie-session');
 const keys = require(__dirname + '/keys/admin');
 const timer = require(__dirname + '/../Timer/serverTimer');
 const bcryptKey = require(__dirname + '/keys/bcrypt');
 var cookieParser = require('cookie-parser');
 
-var sess;
+
 module.exports = {
 
     adminLogin(req, res) {
@@ -52,24 +51,13 @@ module.exports = {
                 bcrypt.compare(reqPassword, result[0].password, (err, rep) => {
                     if (rep) {
                         //Store user login info in cookies
-                        let sess = req.session;
-                        sess.email = req.body.email;
-                        sess.password = req.body.password;
-                        sess.resave = true;
-                        console.log(`logged in`);
-                        let redirect = req.session.redirectTo || '/';
-                        delete req.session.redirectTo;
-                        res.redirect('/');
+                        res.render("customerView", {"date": timer.getTimeNow(), "email": reqEmail})
                     } else {
-                        res.send({
-                            "message": "Wrong password"
-                        });
+                        res.send("Wrong password");
                     }
                 });
             } else { //No matched email
-                res.send({
-                    "message": "No such a user"
-                });
+                res.send("No such a user");
             }
 
 
@@ -84,12 +72,9 @@ module.exports = {
         dbConnection.query(sql, [req.body.email, req.body.name, password], (err, result) => {
             if (err) {
                 throw err;
-                res.send({
-                    "message": "User already exists"
-                });
+                res.send("User already exists");
             } else { //Valid regiseration
-                res.send(`Thank you, Fuck off`);
-                //  res.render('customerView', {"name" : req.body.name}); not done yet the Customer view
+                res.render("customerView", {"date": timer.getTimeNow(), "email": reqEmail})
             }
         })
     },

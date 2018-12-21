@@ -1,0 +1,63 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Hotel name</th>
+      <th>Room number</th>
+      <th>Type</th>
+      <th>Price</th>
+      <th>Stars</th>
+      <th>Rating</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Book</th>
+    </tr>
+    <% for(let i=0; i<data.length; i++){ %>
+      <tr name="<%= data[i].Hname%>" room="<%= data[i].roomNo%>">
+        <td><%= data[i].Hname %></td>
+        <td><%= data[i].roomNo %></td>
+        <td><%= data[i].type %></td>
+        <td><%= data[i].price %></td>
+        <td><%= data[i].stars %></td>
+        <td><%= data[i].rating %></td>
+        <td><%= data[i].city %></td>
+        <td><%= data[i].country %></td>
+        <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Book</button></td>
+      </tr>
+    <% } %>
+  </table>
+</center>
+
+<% include partials/footer %>
+
+<script type="text/javascript">
+  $("button").on("click", e=>{
+    if(document.cookie === ""){
+      alert("You need to login first");
+    }
+    else{
+      let btnId = e.target.id;
+      let rowNum = +(btnId.substring(1));
+      let row = $("tr:has(td)")[rowNum];
+      let Hname = $(row).attr("name");
+      let roomNo = $(row).attr("room");
+      let startDate = prompt("Please enter checkin (DD/MM/YYYY)");
+      let finishDate = prompt("Please enter checkout date (DD/MM/YYYY)");
+      let email = document.cookie.substring(6);
+      console.log(email);
+
+      $.ajax({
+        method: "POST",
+        url: "/reserve",
+        data: {"name": Hname, "room": roomNo, "email": email, "from": startDate, "to": finishDate}
+      }).done(function( data ) {
+        if(data.message){alert(data.message);}
+      });
+
+    }
+
+  })
+</script>

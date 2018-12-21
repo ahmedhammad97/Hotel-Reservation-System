@@ -1,0 +1,57 @@
+<% include partials/header %>
+
+<header>ChillOut</header>
+<center>
+<div class= "box">
+<header>Search</header>
+
+  <!--
+    Search by:
+    - Hotel name
+    - Date of reservation
+    - Location
+    - Price
+    - Stars
+    - Rating
+    - Room type
+  -->
+
+  <form action="search" method="post">
+    <label for="Hname">Hotel name</label><br />
+    <input type="text" name="Hname" value=""><br />
+    <label for="country">Country</label><br />
+    <input type="text" name="country" value=""><br />
+    <label for="city">City</label><br />
+    <input type="text" name="city" value=""><br />
+    <label for="fromDate">From</label><br />
+    <input type="date" name="fromDate" value=""><br />
+    <label for="toDate">To</label><br />
+    <input type="date" name="toDate" value=""><br />
+    <label for="minPrice">Minimum price</label><br />
+    <input type="number" name="minPrice" min="0" value=""><br />
+    <label for="maxPrice">Maximum Price</label><br />
+    <input type="number" name="maxPrice" min="0" value=""><br />
+    <label for="stars">Stars</label><br />
+    <input type="number" min="1" max="5" name="stars" value=""><br />
+    <label for="rating">Minimum Rating</label><br />
+    <input type="number" min="0" max="5" name="rating" value=""><br />
+    <label for="type">Room type</label><br />
+    <select class="" name="type">
+      <option value="single">Single Room</option>
+      <option value="double">Double Room</option>
+      <option value="triple">Triple Room</option>
+      <option value="suite">Suite </option>
+      <option value="king">King Room</option>
+      <option value="queen">Queen Room</option>
+      <option value="studio">Studio</option>
+    </select>
+    <br /><br />
+
+    <button type="submit" name="button" id="searchBtn">Search</button>
+
+  </form>
+
+</div>
+</center>
+
+<% include partials/footer %>
