@@ -16,11 +16,11 @@ module.exports = {
   },
 
   getHotelReservations(req, res){
-    let sql = "SELECT * FROM Reservation WHERE Hname = ?";
-    dbConnection.query(sql, req.body.name, (err, result)=>{
+    let sql = "SELECT * FROM Reservation WHERE Hname = ? AND date_from >= ? AND date_to <= ?";
+    dbConnection.query(sql, [req.body.name, req.body.fromDate, req.body.toDate], (err, result)=>{
       if(err) {throw err; res.send("Failed to retrieve reservations");}
       else{
-        res.send(JSON(result));
+        res.render('owner/reservations', {"date": timer.getTimeNow(), "data": result})
       }
     })
   },

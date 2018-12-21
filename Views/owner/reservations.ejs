@@ -1,0 +1,29 @@
+<% include ../partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Hotel name</th>
+      <th>Room number</th>
+      <th>Customer email</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Did show</th>
+    </tr>
+
+    <% for(let i=0; i < data.length; i++){ %>
+      <tr>
+      <td><%= data[i].Hname %></td>
+      <td><%= data[i].roomNo %></td>
+      <td><%= data[i].c_email %></td>
+      <td><%= data[i].date_from %></td>
+      <td><%= data[i].date_to %></td>
+      <td><%= data[i].did_show %></td>
+      </tr>
+    <% } %>
+  </table>
+</center>
+
+<% include ../partials/footer %>

@@ -2,11 +2,11 @@
 
 <header>ChillOut</header>
 <center>
-<div class= "box">
+<div class= "box" style="padding-top:0px;">
   <br /><br />
   <a href="/createHotel"><button id="createH">Create Hotel</button></a>
   <a href="/createRoom"><button id="createR">Create Room</button></a>
-  <a href="/checkReservations"><button id="checkRes">Check for reservations</button></a><br /><br />
+  <a href="/checkReservations"><button id="checkRes">Check for current reservations</button></a><br /><br />
 
 
   <form action="/checkInOut" method="post" style="background-color: lightblue; padding: 10px; border-radius: 10px">
@@ -24,15 +24,15 @@
   <br /><br />
 
   <form action="/viewHReservations" method="post" style="background-color: #e9e9e9; padding: 10px; border-radius: 10px">
-    <h4>Check current Reservations</h4><br />
+    <h4>Browse Reservations</h4><br />
     <label for="fromDate">From</label>
     <input type="date" name="fromDate">
     <br />
     <label for="toDate">To</label>&nbsp&nbsp&nbsp
-    <input type="date" name="date">
+    <input type="date" name="toDate">
     <br />
-    <label  for="hotelName">Hotel name</label><br>
-    <select name="hotelName" required>
+    <label  for="name">Hotel name</label><br>
+    <select name="name" required>
       <% for(let i=0; i<hotels.length; i++){ %>
         <option value="<%=hotels[i].name%>"><%=hotels[i].name%></option>
       <% } %>

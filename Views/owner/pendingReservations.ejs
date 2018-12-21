@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+
+<header>ChillOut</header>
+<center>
+  <br /><br />
+  <table>
+    <tr>
+      <th>Hotel name</th>
+      <th>Room number</th>
+      <th>Customer email</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Approve</th>
+      <th>Reject</th>
+    </tr>
+    <% for(let i=0; i<data.length; i++){ %>
+      <tr name="<%= data[i].name%>">
+        <td><%= data[i].Hname %></td>
+        <td><%= data[i].roomNo %></td>
+        <td><%= data[i].c_email %></td>
+        <td><%= data[i].date_from %></td>
+        <td><%= data[i].date_to %></td>
+        <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Approve</button></td>
+        <td><button type="button" id="r<%= i %>" style="background-color:red">Reject</button></td>
+      </tr>
+    <% } %>
+  </table>
+</center>
+
+<% include ../partials/footer %>
+
+<script type="text/javascript">
+  $("button").on("click", e=>{
+    let btnId = e.target.id;
+    let rowNum = +(btnId.substring(1));
+    let row = $("tr:has(td)")[rowNum];
+    let Hname = $(row).attr("name");
+
+    if(btnId[0]=='a'){ //Approve
+      $.ajax({
+        method: "POST",
+        url: "/approveHotel",
+        data: {"name": Hname}
+      }).done(function( data ) {
+        if(data.message){alert(data.message);}
+      });
+    }
+    else{ //Reject
+      $.ajax({
+        method: "POST",
+        url: "/rejectHotel",
+        data: {"name": Hname}
+      }).done(function( data ) {
+        if(data.message){alert(data.message);}
+      });
+    }
+  })
+</script>

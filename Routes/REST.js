@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const creation = require(__dirname + '/../Services/creations');
 const auth = require(__dirname + '/../Services/auth');
 const fetch = require(__dirname + '/../Services/fetch');
+const pending = require(__dirname + '/../Services/pendingReservations')
 const update = require(__dirname + '/../Services/updates');
 const searchService = require(__dirname + '/../Services/searchResult');
 const reserve = require(__dirname + '/../Services/reserve');
@@ -97,6 +98,14 @@ router.get('/createRoom', fetch.getHotelsbyOwner)
 router.post('/createRoom', urlencodedParser, creation.createRoom)
 
 router.post('/checkInOut', urlencodedParser, fetch.whoWillCheckInOut)
+
+router.post('/viewHReservations', urlencodedParser, fetch.getHotelReservations)
+
+router.get('/checkReservations', pending.getPendingReservations)
+
+
+
+
 
 router.post('/create', jsonParser, creation.createRoom);
 router.post('/search', urlencodedParser, searchService.getResults);
