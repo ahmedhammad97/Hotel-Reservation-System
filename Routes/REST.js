@@ -96,11 +96,8 @@ router.post('/blacklist', update.blacklistCustomer)
 
 
 
-router.post('/create', jsonParser, creation.createRoom);
 router.post('/search', urlencodedParser, searchService.getResults);
 router.post('/rate', jsonParser, update.rateHotel);
 router.post('/reserve', urlencodedParser, reserve.reserve);
-router.get('/hotelapprove', jsonParser, reserve.approveReservation);
-router.post('/hotelreject', jsonParser, reserve.rejectReservation);
 
 module.exports = router;
