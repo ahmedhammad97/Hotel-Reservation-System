@@ -4,8 +4,6 @@ const bcrypt = require('bcrypt');
 const keys = require(__dirname + '/keys/admin');
 const timer = require(__dirname + '/../Timer/serverTimer');
 const bcryptKey = require(__dirname + '/keys/bcrypt');
-var cookieParser = require('cookie-parser');
-
 
 module.exports = {
 
@@ -17,21 +15,12 @@ module.exports = {
             if (rep1) {
                 bcrypt.compare(req.body.password, keys.password, (err2, rep2) => {
                     if (err2) throw err;
-                    if (rep2) {
-                        res.render('brokerView', { "date": timer.getTimeNow(), "email":req.body.username });
-                    } else {
-                        res.send({
-                            "message": "Wrong password"
-                        });
-                    }
+                    if (rep2) {res.render('brokerView', { "date": timer.getTimeNow(), "email":req.body.username });}
+                    else {res.send("Wrong password");}
                 })
-            } else {
-                res.send({
-                    "message": "Wrong username"
-                });
             }
+            else{res.send("Wrong username");}
         })
-
     },
 
     customerLogin(req, res) {
@@ -124,9 +113,7 @@ module.exports = {
             dbConnection.query(sql, [req.body.email, req.body.name, hash], (err, result) => {
                 if (err) {
                     throw err;
-                    res.send({
-                        "message": "Owner already exists"
-                    });
+                    res.send("Owner already exists");
                 } else { //Valid regiseration
 
                   let sql = "SELECT name FROM Hotel WHERE O_email = ?";

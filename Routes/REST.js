@@ -77,7 +77,7 @@ router.post('/approveRegisteration', urlencodedParser, pending.approve);
 router.post('/rejectRegisteration', urlencodedParser, pending.reject);
 
 router.get('/createHotel', authMiddleware.isOwner, (req, res) => {
-    res.render('owner/createHotel', { "date": timer.getTimeNow() })
+    res.render('owner/createHotel', { "date": timer.getTimeNow(), "email": req.cookies.email })
 })
 
 router.post('/createHotel', urlencodedParser, creation.createPendingHotel)

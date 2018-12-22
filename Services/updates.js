@@ -36,38 +36,35 @@ module.exports = {
 
   suspendHotel(req, res){
     let sql = "UPDATE Hotel SET suspend = ? WHERE name = ?";
-    try {
-      dbConnection.query(sql, [true, req.body.name], (err, result)=>{
-        if(err){throw err; res.send("Wrong query");}
-        res.send("Suspended successfully");
-      })
-    } catch (e) {
-      res.send("No such a hotel")
-    }
+    dbConnection.query(sql, [true, req.body.name], (err, result)=>{
+      if(err){throw err; res.send("Wrong query");}
+      else{
+        if(result.affectedRows > 0){res.send("Suspended successfully");}
+        else{res.send("Wrong Hotel name");}
+      }
+    })
   },
 
   unsuspendHotel(req, res){
     let sql = "UPDATE Hotel SET suspend = ? WHERE name = ?";
-    try {
-      dbConnection.query(sql, [false, req.body.name], (err, result)=>{
-        if(err){throw err; res.send("Wrong query");}
-        res.send("Unsuspended successfully");
-      })
-    } catch (e) {
-      res.send("No such a hotel")
-    }
+    dbConnection.query(sql, [false, req.body.name], (err, result)=>{
+      if(err){throw err; res.send("Wrong query");}
+      else{
+        if(result.affectedRows > 0){res.send("Unsuspended successfully");}
+        else{res.send("Wrong Hotel name");}
+      }
+    })
   },
 
   blacklistCustomer(req, res){
     let sql = "UPDATE Customer SET blackListed = ? WHERE email = ?";
-    try {
-      dbConnection.query(sql, [true, req.body.email], (err, result)=>{
-        if(err){throw err; res.send("Wrong query");}
-        res.send("Blacklisted successfully");
-      })
-    } catch (e) {
-      res.send("No such a Customer")
-    }
+    dbConnection.query(sql, [true, req.body.email], (err, result)=>{
+      if(err){throw err; res.send("Wrong query");}
+      else{
+        if(result.affectedRows > 0){res.send("Blacklisted successfully");}
+        else{res.send("Wrong Customer name");}
+      }
+    })
   }
 
 }
