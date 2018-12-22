@@ -7,7 +7,7 @@ module.exports = {
 
   getCustomerReservations(req, res){
     let sql = "SELECT * FROM Reservation WHERE c_email = ?";
-    dbConnection.query(sql, req.body.email, (err, result)=>{
+    dbConnection.query(sql, req.cookies.email, (err, result)=>{
       if(err) {throw err; res.send("Failed to retrieve reservations");}
       else{
         res.render('customer/customerReservations', {"date": timer.getTimeNow(), "data": result})

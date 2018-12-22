@@ -10,14 +10,13 @@
       <th>Customer email</th>
       <th>From</th>
       <th>To</th>
-      <th>Approve</th>
-      <th>Reject</th>
+      <th>Rate</th>
     </tr>
     <% for(let i=0; i<data.length; i++){ %>
-      <tr name="<%= data[i].name%>">
-        <td><%= data[i].name %></td>
+      <tr name="<%= data[i].Hname%>">
+        <td><%= data[i].Hname %></td>
         <td><%= data[i].roomNo %></td>
-        <td><%= data[i].email %></td>
+        <td><%= data[i].c_email %></td>
         <td><%= data[i].date_from %></td>
         <td><%= data[i].date_to %></td>
         <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Rate</button></td>
@@ -34,11 +33,13 @@
     let rowNum = +(btnId.substring(1));
     let row = $("tr:has(td)")[rowNum];
     let Hname = $(row).attr("name");
+    let rating = prompt("Enter rating please (0-5)");
+    if(rating>5 || rating<0){alert("Wrong rating .. try again!"); return;}
 
       $.ajax({
         method: "POST",
-        url: "/approveHotel",
-        data: {"name": Hname}
+        url: "/rate",
+        data: {"name": Hname, "rating": rating}
       }).done(function( data ) {
         if(data.message){alert(data.message);}
       });

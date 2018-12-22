@@ -107,6 +107,6 @@ router.post('/search', urlencodedParser, searchService.getResults);
 router.get('/customerReservations', authMiddleware.isCustomer, fetch.getCustomerReservations)
 
 
-router.post('/rate', jsonParser, update.rateHotel);
+router.post('/rate', urlencodedParser, update.rateHotel);
 
 module.exports = router;

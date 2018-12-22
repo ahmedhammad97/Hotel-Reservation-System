@@ -7,7 +7,7 @@ module.exports = {
     // Fetch for the rating and rating count
     let sql = "SELECT rating, r_count from Hotel WHERE name = ?";
     dbConnection.query(sql, req.body.name, (err1, result1)=>{
-      if(err1){throw err1; res.send("Failed to update");}
+      if(err1){throw err1; res.send({"message": "Failed to update"});}
       else{
         // Calculate new rating
         let rating = result1[0].rating;
@@ -17,7 +17,7 @@ module.exports = {
         // Update the relation
         sql = "UPDATE Hotel SET rating = ? , r_count = ? WHERE name = ?";
         dbConnection.query(sql, [rating, ratingCount+1, req.body.name], (err2, result2)=>{
-          if(err2){throw err2; res.send("Failed to update");}
+          if(err2){throw err2; res.send({"message": "Failed to update"});}
           else{res.send({"message": "Rated successfully"});}
         })
       }
