@@ -10,7 +10,7 @@ module.exports = {
     dbConnection.query(sql, req.body.email, (err, result)=>{
       if(err) {throw err; res.send("Failed to retrieve reservations");}
       else{
-        res.send(JSON(result));
+        res.render('customer/customerReservations', {"date": timer.getTimeNow(), "data": result})
       }
     })
   },

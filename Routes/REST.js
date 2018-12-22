@@ -97,13 +97,14 @@ router.post('/checkin', update.customerShow)
 router.post('/blacklist', update.blacklistCustomer)
 
 router.get('/search', (req, res)=>{
-  res.render('search', { "date": timer.getTimeNow() })
+  res.render('customer/search', { "date": timer.getTimeNow() })
 })
 
 router.post('/reserve', urlencodedParser, reserve.reserve, pending.createReservation);
 
 router.post('/search', urlencodedParser, searchService.getResults);
 
+router.get('/customerReservations', authMiddleware.isCustomer, fetch.getCustomerReservations)
 
 
 router.post('/rate', jsonParser, update.rateHotel);

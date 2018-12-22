@@ -33,6 +33,7 @@ module.exports = {
     for(let i=0; i<waiting.length; i++){
       result.push(waiting[i].data);
     }
+    console.log(result);
     res.render("owner/pendingReservations", {"date": timer.getTimeNow(), "data":result})
   }
 

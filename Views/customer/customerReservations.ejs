@@ -17,11 +17,10 @@
       <tr name="<%= data[i].name%>">
         <td><%= data[i].name %></td>
         <td><%= data[i].roomNo %></td>
-        <td><%= data[i].c_email %></td>
+        <td><%= data[i].email %></td>
         <td><%= data[i].date_from %></td>
         <td><%= data[i].date_to %></td>
-        <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Approve</button></td>
-        <td><button type="button" id="r<%= i %>" style="background-color:red">Reject</button></td>
+        <td><button type="button" id="a<%= i %>" style="background-color:limeGreen">Rate</button></td>
       </tr>
     <% } %>
   </table>
@@ -36,7 +35,6 @@
     let row = $("tr:has(td)")[rowNum];
     let Hname = $(row).attr("name");
 
-    if(btnId[0]=='a'){ //Approve
       $.ajax({
         method: "POST",
         url: "/approveHotel",
@@ -44,15 +42,6 @@
       }).done(function( data ) {
         if(data.message){alert(data.message);}
       });
-    }
-    else{ //Reject
-      $.ajax({
-        method: "POST",
-        url: "/rejectHotel",
-        data: {"name": Hname}
-      }).done(function( data ) {
-        if(data.message){alert(data.message);}
-      });
-    }
+
   })
 </script>

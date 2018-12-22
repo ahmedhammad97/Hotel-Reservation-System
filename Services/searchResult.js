@@ -82,7 +82,7 @@ module.exports = {
 
         dbconnection.query(sql, (err, result) => {
             if (err) throw err;
-            res.render("searchResults", { "date": timer.getTimeNow(), "data": result });
+            res.render("customer/searchResults", { "date": timer.getTimeNow(), "data": result });
             res.end()
         });
 
