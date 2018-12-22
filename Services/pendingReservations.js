@@ -1,7 +1,8 @@
 const dbConnection = require(__dirname + '/../Database/connection');
 const timer = require(__dirname + '/../Timer/serverTimer');
 
-var waiting = []
+//Assuming only one reservation is being held
+var waiting = [];
 
 module.exports = {
 
@@ -14,27 +15,24 @@ module.exports = {
   },
 
   approve(req, res){
-    let i = searchForObject(req.body)
-    if(i){
-      clearTimeout(waiting[i].counter)
-      actualCreation(req.body)
-    }
+    clearTimeout(waiting[0].counter)
+    actualCreation(waiting[0].data)
+    waiting.shift();
+    res.send({"message" : "Approved successfully"})
   },
 
   reject(req, res){
-    let i = searchForObject(req.body)
-    if(i){
-      clearTimeout(waiting[i].counter)
-    }
+    clearTimeout(waiting[0].counter);
+    waiting.shift();
+    res.send({"message" : "Rejected successfully"})
   },
 
   getPendingReservations(req, res){
     let result = [];
     for(let i=0; i<waiting.length; i++){
-      result.push(waiting[i].data);
+      result.push(waiting[i].data)
     }
-    console.log(result);
-    res.render("owner/pendingReservations", {"date": timer.getTimeNow(), "data":result})
+    res.render("owner/pendingReservations", {"date": timer.getTimeNow(), "data": result})
   }
 
 
@@ -43,18 +41,10 @@ module.exports = {
 //Helper functions
 function actualCreation(data){
   let sql = "INSERT INTO Reservation (Hname, roomNo, c_email, date_to, date_from) VALUES(?, ?, ?, ?, ?)";
-  dbConnection.query(sql, [data.Hname, data.number, data.email, data.toDate, data.fromDate], (err, result)=>{
+  dbConnection.query(sql, [data.name, data.room, data.email, new Date(data.to), new Date(data.from)], (err, result)=>{
     if(err) throw err;
     else{
       console.log("Created successfully");
     }
   })
-}
-
-function searchForObject(obj){
-  for(let i=0; i<waiting.length; i++){
-    if(JSON.stringify(waiting[i].data) === JSON.stringify(obj)){return i;}
-    console.log("Cannot found");
-    return null;
-  }
 }

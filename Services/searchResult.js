@@ -28,8 +28,8 @@ module.exports = {
 
                     if(Hname !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
-                      sql += `Hotel.name = ${'Hname'}`
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
+                      sql += `Hotel.name = "${Hname}"`
                     }
                     if(rating !== ""){
                       if(AndBool){sql += " AND ";}
@@ -44,17 +44,17 @@ module.exports = {
                     if(type !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE "}
-                      sql += `HotelRoom.type = ${"type"}`
+                      sql += `HotelRoom.type = "${type}"`
                     }
                     if(country !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE "}
-                      sql += `Location.country = ${'country'}`
+                      sql += `Location.country = "${country}"`
                     }
                     if(city !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE "}
-                      sql += `Location.city = ${'city'}`
+                      sql += `Location.city = "${city}"`
                     }
                     if(minPrice !== ""){
                       if(AndBool){sql += " AND ";}

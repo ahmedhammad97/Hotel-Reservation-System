@@ -10,9 +10,9 @@ module.exports = {
       if(err1){throw err1; res.send({"message": "Failed to update"});}
       else{
         // Calculate new rating
-        let rating = result1[0].rating;
-        let ratingCount = result1[0].r_count;
-        rating = ((rating * ratingCount) + req.body.rating) / (ratingCount+1);
+        let rating = +(result1[0].rating);
+        let ratingCount = +(result1[0].r_count);
+        rating = (( rating * ratingCount ) + +(req.body.rating)) / (ratingCount+1);
 
         // Update the relation
         sql = "UPDATE Hotel SET rating = ? , r_count = ? WHERE name = ?";
