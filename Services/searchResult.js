@@ -19,10 +19,11 @@ module.exports = {
             let AndBool = false;
 
 
-        let sql = ` SELECT * FROM HotelRoom
-                    INNER JOIN Hotel on Hotel.name = HotelRoom.Hname
+        let sql = ` SELECT Hotel.name, Hotel.stars, Hotel.rating, Location.country, Location.city,
+                    HotelRoom.roomNo, HotelRoom.type, HotelRoom.price
+                    FROM HotelRoom INNER JOIN Hotel ON Hotel.name = HotelRoom.Hname
                     INNER JOIN Location on Location.Hname = HotelRoom.Hname
-                    INNER JOIN Reservation ON
+                    LEFT JOIN Reservation ON
                     (Hotel.name = Reservation.Hname AND HotelRoom.roomNo = Reservation.roomNo) `;
 
 
@@ -33,47 +34,47 @@ module.exports = {
                     }
                     if(rating !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `Hotel.rating >= ${rating}`
                     }
                     if(stars !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `Hotel.stars = ${stars}`
                     }
                     if(type !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `HotelRoom.type = "${type}"`
                     }
                     if(country !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `Location.country = "${country}"`
                     }
                     if(city !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `Location.city = "${city}"`
                     }
                     if(minPrice !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `HotelRoom.price >= ${minPrice}`
                     }
                     if(maxPrice !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `HotelRoom.price <= ${maxPrice}`
                     }
                     if(date_from !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `${date_from} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
                     }
                     if(date_to !== ""){
                       if(AndBool){sql += " AND ";}
-                      else{AndBool=true; sql+= " WHERE "}
+                      else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
                       sql += `${date_to} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
                     }
 
