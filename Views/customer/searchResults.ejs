@@ -48,6 +48,8 @@
       let finishDate = prompt("Please enter checkout date (DD/MM/YYYY)");
       let email = document.cookie.substring(6);
 
+      if(wrongFormat(startDate) || wrongFormat(finishDate)){alert("Wrong date formats .. Try again"); return;}
+
       $.ajax({
         method: "POST",
         url: "/reserve",

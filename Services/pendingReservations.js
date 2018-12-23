@@ -1,5 +1,6 @@
 const dbConnection = require(__dirname + '/../Database/connection');
 const timer = require(__dirname + '/../Timer/serverTimer');
+const moment = require('moment');
 
 //Assuming only one reservation is being held
 var waiting = [];
@@ -41,10 +42,14 @@ module.exports = {
 //Helper functions
 function actualCreation(data){
   let sql = "INSERT INTO Reservation (Hname, roomNo, c_email, date_to, date_from) VALUES(?, ?, ?, ?, ?)";
-  dbConnection.query(sql, [data.name, data.room, data.email, new Date(data.to), new Date(data.from)], (err, result)=>{
-    if(err) throw err;
-    else{
-      console.log("Created successfully");
-    }
-  })
+  try {
+    dbConnection.query(sql, [data.name, data.room, data.email, moment(data.to, "DD/MM/YYYY").format("YYYY-MM-DD"), moment(data.from, "DD/MM/YYYY").format("YYYY-MM-DD")], (err, result)=>{
+      if(err) throw err;
+      else{
+        console.log("Created successfully");
+      }
+    })
+  } catch (e) {
+    console.log("Duplicated Slot .. Cannot book");
+  }
 }

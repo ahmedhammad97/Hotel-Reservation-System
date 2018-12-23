@@ -92,9 +92,9 @@ router.post('/viewHReservations', urlencodedParser, fetch.getHotelReservations)
 
 router.get('/checkReservations', authMiddleware.isOwner, pending.getPendingReservations)
 
-router.post('/checkin', update.customerShow)
+router.post('/checkin', urlencodedParser, update.customerShow)
 
-router.post('/blacklist', update.blacklistCustomer)
+router.post('/blacklist', urlencodedParser, update.blacklistCustomer)
 
 router.get('/search', (req, res)=>{
   res.render('customer/search', { "date": timer.getTimeNow() })

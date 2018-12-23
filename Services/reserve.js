@@ -1,5 +1,6 @@
 var dbconnection = require(__dirname + '/../Database/connection');
 const timer = require(__dirname + '/../Timer/serverTimer');
+const moment = require('moment')
 const TOTAL_MILLISECONDS_IN_A_MONTH = 60*60*24*30;
 
 module.exports = {
@@ -26,15 +27,14 @@ module.exports = {
 
                   // Phase 2: Check  if the block period has ended.-
                   // Get the Last reservation (DATE_FROM) from the DB and check if it has been 1 week since then or not
-                  let date_sql = `SELECT MAX(date_from) as "maxDate" from Reservation WHERE c_email = "${c_email}" `;
+                  let date_sql = `SELECT MAX(date_from) AS maxDate FROM Reservation WHERE c_email = "${c_email}" `;
                   dbconnection.query(date_sql, (err, result) => {
                       if (err) throw err;
-                      let now = timer.getTimeNow() //Getting the current date
-                          ,
-                          block_date = new Date(result[0].maxDate) //Getting the TimeStamp of the Date when the user has been blocked
-                          ,
-                          diff = now - block_date; //Difference between the two dates
-                      if (Math.floor((diff/1000)) >= TOTAL_MILLISECONDS_IN_A_MONTH) { //if(diff >TOTAL_MILLISECONDS_IN_A_WEEK)
+                      let now = moment(timer.getTimeNow(), "DD/MM/YYYY, h:mm:ss a") //Getting the current date
+
+                      let block_datePlusMonth = moment(result[0].maxDate).add(1, "Months") //Getting the TimeStamp of the Date when the user has been blocked
+
+                      if (block_datePlusMonth.isBefore(now)) { //Duration has ended
                         sql = "UPDATE Customer SET blackListed = false WHERE email = ?";
                         dbconnection.query(sql, c_email, (err, result)=>{
                           if(err) throw err;

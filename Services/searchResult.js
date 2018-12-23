@@ -1,6 +1,7 @@
 //Dependencies
 const dbconnection = require(__dirname + '/../Database/connection');
 const timer = require(__dirname + '/../Timer/serverTimer');
+const moment = require('moment')
 
 module.exports = {
 
@@ -70,15 +71,16 @@ module.exports = {
                     if(date_from !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
-                      sql += `${date_from} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                      sql += `"${date_from}" NOT BETWEEN Reservation.date_from AND Reservation.date_to`
                     }
                     if(date_to !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
-                      sql += `${date_to} NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                      sql += `"${date_to}" NOT BETWEEN Reservation.date_from AND Reservation.date_to`
                     }
 
-                    sql+= " GROUP BY Hotel.premium";
+                    sql+= " ORDER BY Hotel.premium DESC";
+
 
 
         dbconnection.query(sql, (err, result) => {
