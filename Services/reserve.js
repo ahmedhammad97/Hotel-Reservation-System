@@ -19,7 +19,7 @@ module.exports = {
 
             // If no user exists with this Email
             if (rows.length < 1) {
-                res.send({"message" : "Faked cookie!"});
+                res.send({"message" : "Not authorised user .. Login first, please"});
             }
             else{
               // Phase 1: If the user is Blacklisted (the rows is only one row with value 1)

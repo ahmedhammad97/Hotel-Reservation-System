@@ -19,7 +19,6 @@ module.exports = {
 
             let AndBool = false;
 
-
         let sql = ` SELECT Hotel.name, Hotel.stars, Hotel.rating, Location.country, Location.city,
                     HotelRoom.roomNo, HotelRoom.type, HotelRoom.price
                     FROM HotelRoom INNER JOIN Hotel ON Hotel.name = HotelRoom.Hname
@@ -71,16 +70,15 @@ module.exports = {
                     if(date_from !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
-                      sql += `"${date_from}" NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                      sql += `Reservation.date_from < "${date_from}" AND Reservation.date_to > "${date_from}"`
                     }
                     if(date_to !== ""){
                       if(AndBool){sql += " AND ";}
                       else{AndBool=true; sql+= " WHERE Hotel.suspend = false AND  "}
-                      sql += `"${date_to}" NOT BETWEEN Reservation.date_from AND Reservation.date_to`
+                      sql += `"${date_to}" > Reservation.date_from AND "${date_to}" < Reservation.date_to`
                     }
 
                     sql+= " ORDER BY Hotel.premium DESC";
-
 
 
         dbconnection.query(sql, (err, result) => {

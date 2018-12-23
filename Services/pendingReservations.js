@@ -42,14 +42,11 @@ module.exports = {
 //Helper functions
 function actualCreation(data){
   let sql = "INSERT INTO Reservation (Hname, roomNo, c_email, date_to, date_from) VALUES(?, ?, ?, ?, ?)";
-  try {
-    dbConnection.query(sql, [data.name, data.room, data.email, moment(data.to, "DD/MM/YYYY").format("YYYY-MM-DD"), moment(data.from, "DD/MM/YYYY").format("YYYY-MM-DD")], (err, result)=>{
-      if(err) throw err;
-      else{
-        console.log("Created successfully");
-      }
-    })
-  } catch (e) {
-    console.log("Duplicated Slot .. Cannot book");
-  }
+  dbConnection.query(sql, [data.name, data.room, data.email, moment(data.to, "DD/MM/YYYY").format("YYYY-MM-DD"), moment(data.from, "DD/MM/YYYY").format("YYYY-MM-DD")], (err, result)=>{
+    if(err) console.log("Duplicated Slot .. Cannot book");
+    else{
+      console.log("Created successfully");
+    }
+  })
+
 }
