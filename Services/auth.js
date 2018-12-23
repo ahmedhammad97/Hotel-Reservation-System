@@ -63,7 +63,7 @@ module.exports = {
                 throw err;
                 res.send("User already exists");
             } else { //Valid regiseration
-                res.render("customerView", {"date": timer.getTimeNow(), "email": reqEmail})
+                res.render("customerView", {"date": timer.getTimeNow(), "email": req.body.email})
             }
         })
     },

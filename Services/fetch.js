@@ -73,7 +73,7 @@ module.exports = {
   },
 
   getHotelsbyOwner(req, res){
-    let ownerEmail = req.cookie.email;
+    let ownerEmail = req.cookies.email;
     let sql = "SELECT name FROM Hotel WHERE O_email = ?";
     dbConnection.query(sql, ownerEmail, (err, result)=>{
       if(err){throw err; res.send("Error occured");}
