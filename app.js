@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/Views'));
 
 //Listen to port
-const server = app.listen(1997, ()=>{console.log("Listening at port 1997...")});
+const server = app.listen(process.env.PORT || 1997, ()=>{console.log("Listening at port 1997...")});
 
 //Cookie Parser
 app.use(cookieParser());
