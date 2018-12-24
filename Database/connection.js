@@ -1,6 +1,6 @@
-const mysql = require('mysql');
+const mysqls = require('mysql');
 
-const con = mysql.createConnection({
+const con = mysqls.createConnection({
   host: "localhost",
   user: "root",
   password: "",
