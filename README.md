@@ -1,45 +1,32 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+Web app that allows customers to book their hotel rooms easily, and allows hotel owners to manage their reservations efficiently.
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+## How it works
+Typically, almost all functionalities follows the same pattern, of which an event is invoked on the client side (button click, form submission..etc.), which then sends a HTTP request to the server, that passes through a series of authentication and validation middlewares, and if it managed to survive, it's then sent to the suitable service that is implemented to serve it.
+After that, a response is sent loaded with the requested data, or a suitable view is rendered.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+## Actors
+The users of the application can be classified into:
 
----
+#### Customers
+A customer must sign up or log in to view his profile, which allows him to view his past and current reservations, as well as allowing him to search and book his desired room with the help of 10 parameters search tool.
 
-## Edit a file
+#### Hotel Owner
+Same as the customer, the owner may view his profile after signing up or logging in, which let him create a hotel, a room, view his pending reservations, check in a user, black-list a user, and a variety of helpful functionalities.
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+#### Admin(s)
+Unlike the other users, admin has a back-door way to login to the server, after that, he get access to the control panel, through which he may suspend or un-suspend hotels, approve and reject hotels, or view hotels payments to the app.
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
 
----
 
-## Create a file
+## Technologies
+- Express.js
+- Ejs view engine
+- Moment.js
+- MySQL
 
-Next, you’ll add a new file to this repository.
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
-
----
-
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+## Sample Screenshots
+![ScreenShot1](https://github.com/ahmedhammad97/Hotel-Reservation-System/blob/master/Screenshots/1.png)
+![ScreenShot2](https://github.com/ahmedhammad97/Hotel-Reservation-System/blob/master/Screenshots/2.png)
+![ScreenShot3](https://github.com/ahmedhammad97/Hotel-Reservation-System/blob/master/Screenshots/3.png)
+![ScreenShot4](https://github.com/ahmedhammad97/Hotel-Reservation-System/blob/master/Screenshots/4.png)
